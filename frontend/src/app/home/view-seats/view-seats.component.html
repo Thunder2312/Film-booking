@@ -1,0 +1,35 @@
+<app-header></app-header>
+
+<h2 class="title">
+    {{selectedMovie()?.title}}</h2>
+
+<h3>Regular Seats</h3>
+<div class="seat-row">
+    @for(seat of regularSeats; track seat.seatName){
+        <button 
+        (click)="toggleSeat(seat.seatName)"
+        class="seat-button regular"
+        [class.selected]="selectedSeats.has(seat.seatName)">
+        {{seat.seatName}}
+      </button>
+    }
+</div>
+
+<h3>Premium Seats</h3>
+<div class="seat-row">
+    @for(seat of premiumSeats; track seat.seatName){
+        <button (click)="!seatSelected" class="seat-button premium">{{seat.seatName}}</button>
+    }
+</div>
+
+<h3>VIP Seats</h3>
+<div class="seat-row">
+    @for(seat of vipSeats; track seat.seatName){
+        <button 
+  (click)="toggleSeat(seat.seatName)"
+  class="seat-button regular"
+  [class.selected]="selectedSeats.has(seat.seatName)">
+  {{seat.seatName}}
+</button>
+    }
+</div>

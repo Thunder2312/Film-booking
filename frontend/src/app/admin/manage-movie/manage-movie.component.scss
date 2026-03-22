@@ -1,0 +1,99 @@
+.action-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+}
+
+/* Header */
+.action-table thead th {
+  background:  rgb(182, 157, 230);
+  color: black;
+  padding: 12px 14px;
+  font-weight: 600;
+  text-align: left;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Table rows */
+.action-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e7e7e7;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+/* Limit description to multiple lines */
+.action-table td.description-col {
+  max-width: 250px;
+  line-height: 1.3;
+}
+
+/* Hover */
+.action-table tbody tr:hover {
+  background: #f4f7ff;
+}
+
+/* Image column */
+.action-table img {
+  width: 70px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+/* Icons */
+.action-table i {
+  color: #555;
+  transition: 0.2s ease;
+}
+
+.action-table i:hover {
+  color: #3949ab;
+  transform: scale(1.15);
+}
+
+/* Delete icon red hover */
+.action-table i.fa-trash:hover {
+  color: #e53935;
+}
+
+/* Responsive table (mobile-friendly) */
+@media (max-width: 900px) {
+
+  .action-table thead {
+    display: none;
+  }
+
+  .action-table tr {
+    display: block;
+    margin-bottom: 12px;
+    border: 1px solid #e2e2e2;
+    border-radius: 6px;
+    padding: 10px;
+  }
+
+  .action-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 6px;
+    border-bottom: none;
+  }
+
+  .action-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #333;
+    margin-right: 10px;
+  }
+
+  .action-table img {
+    width: 60px;
+    height: 80px;
+  }
+}

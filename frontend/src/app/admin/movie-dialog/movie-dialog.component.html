@@ -1,0 +1,60 @@
+<form [formGroup]="movieForm" (ngSubmit)="onsubmit()" autocomplete="off">
+
+  <div class="floating-label">
+    <input type="text" id="title" formControlName="title" required />
+    <label for="title">Title</label>
+  </div>
+
+  <div class="floating-label">
+    <input type="text" id="year" formControlName="year" required />
+    <label for="year">Year</label>
+  </div>
+
+  <div class="floating-label">
+    <textarea id="description" rows="3" formControlName="description" required></textarea>
+    <label for="description">Description</label>
+  </div>
+
+  <div class="floating-label">
+    <input type="number" id="duration" formControlName="duration_minutes" required />
+    <label for="duration">Duration(in minutes)</label>
+  </div>
+
+  <div class="floating-label">
+    <input type="text" id="genre" formControlName="genre" required />
+    <label for="genre">Genre</label>
+  </div>
+
+  <div class="floating-label">
+    <input type="text" id="language" formControlName="language" required />
+    <label for="language">Languages</label>
+  </div>
+
+  <div class="floating-label">
+    <input type="text" id="writers" formControlName="writers" required />
+    <label for="writers">Writers</label>
+  </div>
+
+  <div class="floating-label">
+    <input type="text" id="actors" formControlName="actors" required />
+    <label for="actors">Actors</label>
+  </div>
+
+  <div class="floating-label">
+    <input type="text" id="image" formControlName="img_link" required />
+    <label for="image">Image Link/Image</label>
+  </div>
+
+  <div class="floating-label">
+    <input type="text" id="rated" formControlName="rated" required />
+    <label for="rated">Rated</label>
+  </div>
+
+  <div class="floating-label">
+    <input type="date" id="date" formControlName="release_date" required />
+    <label for="date">Date</label>
+  </div>
+
+  <button class="submit" type="submit" [disabled]="movieForm.invalid">Add Movie</button>
+
+</form>

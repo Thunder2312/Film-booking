@@ -1,0 +1,13 @@
+# Ignore frontend environment file
+/frontend/environment/environment.ts
+/frontend/environment/
+/frontend/.vscode
+/frontend/.angular
+
+
+# Ignore backend environment file
+/backend/.env
+/backend/table.sql
+
+# Ignore all node_modules folders
+node_modules/

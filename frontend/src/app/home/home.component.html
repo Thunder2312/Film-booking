@@ -1,0 +1,17 @@
+<app-header></app-header>
+
+    <h1>Recommended Movies</h1>
+
+    <div class="movie-results">
+        @for(movie of movies(); track movie.movie_id){
+            <div class="movie-card">
+                <img [src]="movie.image !== 'N/A' ? movie.image : 'assets/no-image.png'" alt="Poster" (click)="gotoMovieDetails(movie.movie_id)">
+                <div class="movie-details">
+                    <h2>{{movie.title}}</h2>
+                </div>
+            </div>
+        }
+    </div>
+
+
+    <router-outlet></router-outlet>

@@ -1,0 +1,53 @@
+<app-header></app-header>
+
+<div class="page-layout">
+
+    <div class="movie-details">
+        <h2 class="title" (click)="gotoMovieDetails(selectedMovie()?.movie_id)">
+            {{selectedMovie()?.title}}
+        </h2>
+        <span class="runtime">
+            Movie runtime:
+            {{minutesToHoursMinutes(selectedMovie()?.duration_minutes)}}
+        </span>
+
+        <span class="genre">
+            {{selectedMovie()?.rated}}
+        </span>
+
+        <span class="genre"
+        *ngFor="let genre of selectedMovie()?.genre?.split(',')"
+        >
+            {{genre.trim()}}
+        </span>
+
+        <div class="date-selector">
+            <button
+            c
+            *ngFor="let date of nextSixDays"
+            >
+            <div>{{date | date: 'EEE'}}</div>
+            <div class="day">{{date | date: 'd'}}</div>
+            <div class="month">{{date | date: 'MMM' | uppercase}}</div>
+            </button>
+        </div>
+    </div>
+    <div class="showtimes-container">
+        <div class="theater-card" *ngFor="let show of showtimes()">
+            <div class="theater-header">
+                <h3>{{show.theater_name}}</h3>
+                <span class="location">{{show.theater_location}}</span>
+            </div>
+            <div class="time-slot"
+            *ngFor="let time of show.showtimes">
+                <button
+                class="start-time"
+                (click)="gotoSeats(time.showtime_id, selectedMovie()?.movie_id)">
+                {{time.start_time}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

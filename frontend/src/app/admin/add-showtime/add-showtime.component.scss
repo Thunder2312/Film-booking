@@ -1,0 +1,174 @@
+.movie-card {
+  display: flex;
+  gap: 20px;
+  background-color: rgb(182, 157, 230);
+  padding: 20px;
+  border-radius: 12px;
+  width: 1150px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.movie-poster {
+  width: 220px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.movie-info {
+  flex: 1;
+  color: #1f1f1f;
+}
+
+.movie-title {
+  margin: 0 0 10px;
+  font-size: 28px;
+  font-weight: bold;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 6px;
+}
+
+.description {
+  font-size: 15px;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.movie-meta {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.movie-meta li {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+
+.showtime-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+}
+
+/* Header */
+.showtime-table thead th {
+  background: rgb(182, 157, 230);
+  color: black;
+  padding: 12px 14px;
+  font-weight: 600;
+  text-align: left;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Table rows */
+.showtime-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e7e7e7;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+/* Hover */
+.showtime-table tbody tr:hover {
+  background: #f4f7ff;
+}
+
+/* Inputs and Selects */
+.showtime-table input,
+.showtime-table select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+  box-sizing: border-box;
+  transition: 0.2s ease;
+}
+
+.showtime-table input:focus,
+.showtime-table select:focus {
+  outline: none;
+  border-color: #3949ab;
+  box-shadow: 0 0 4px rgba(57, 73, 171, 0.3);
+}
+
+@media (max-width: 900px) {
+  .showtime-table thead {
+    display: none;
+  }
+
+  .showtime-table tr {
+    display: block;
+    margin-bottom: 12px;
+    border: 1px solid #e2e2e2;
+    border-radius: 6px;
+    padding: 10px;
+  }
+
+  .showtime-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 6px;
+    border-bottom: none;
+  }
+
+  .showtime-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #333;
+    margin-right: 10px;
+  }
+}
+
+
+/* For tablets and smaller screens */
+@media (max-width: 1024px) {
+  .movie-card {
+    flex-direction: column;
+    width: 90%;
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .movie-poster {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .movie-title {
+    font-size: 24px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+}
+
+/* For mobile devices */
+@media (max-width: 600px) {
+  .movie-card {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .movie-title {
+    font-size: 20px;
+  }
+
+  .description {
+    font-size: 13px;
+  }
+
+  .movie-meta li {
+    font-size: 12px;
+  }
+}

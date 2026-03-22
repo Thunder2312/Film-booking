@@ -1,0 +1,65 @@
+<app-header></app-header>
+
+@if (selectedMovie() && !error()){
+
+    <div #movieCard class="movie-card">
+        
+        <img
+        class="movie-poster"
+        [src]="selectedMovie()?.image"
+        [alt]="selectedMovie()?.title"
+        />
+
+
+    <div class="movie-info">
+        <h2 class="movie-title">{{selectedMovie()?.title}}</h2>
+
+        <ul>
+            <li>
+                {{minutesToHoursMinutes(selectedMovie()?.duration_minutes)}}
+            </li>
+            <li>
+                {{ selectedMovie()?.release_date | date }}
+            </li>
+            <li>
+                {{selectedMovie()?.genre}}
+            </li>
+        </ul>
+        <br>
+        <button class="book" (click)="goToView(selectedMovie()?.movie_id)">Book Tickets</button>
+    </div>
+    </div>
+
+    <div class="sticky-div" [class.visible]="isStickyVisible">
+        <h2> {{selectedMovie()?.title}} </h2>
+        <button class="book" (click)="goToView(selectedMovie()?.movie_id)">Book Tickets</button>
+    </div>
+
+    <div class="movie-extra">
+        <span class="about"><strong>About the movie</strong></span>
+        <p class="description">{{selectedMovie()?.description}}</p>
+
+        <ul class="movie-meta">
+            <li>
+                <span class="meta-title">Writers</span>
+                <span class="meta-value">{{selectedMovie()?.writers}}</span>
+            </li>
+
+            <li>
+                <span class="meta-title">Actors</span>
+                <span class="meta-value">{{selectedMovie()?.actors}}</span>
+            </li>
+
+            <li>
+                <span class="meta-title">Country</span>
+                <span class="meta-value">{{selectedMovie()?.country}}</span>
+            </li>
+
+            <li>
+                <span class="meta-title">Language</span>
+                <span class="meta-value">{{selectedMovie()?.language}}</span>
+            </li>
+        </ul>
+    </div>
+}
+

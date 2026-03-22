@@ -1,0 +1,28 @@
+.header {
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* pushes left & right items to edges */
+    padding: 10px 20px; /* optional horizontal padding */
+    width: 100vw; /* make header full screen width */
+    box-sizing: border-box; /* include padding in width */
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+img {
+    margin: 0;
+    width: 100px;
+    height: 50px;
+    background-color: transparent;
+}
+
+button {
+    background-color: aqua;
+    color: black;
+    border-radius: 30%;
+    border: none;
+    padding: 10px 20px;
+    font-family: inherit;
+    cursor: pointer;
+}

@@ -1,0 +1,43 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+  <button mat-raised-button class="add-theater" (click)="movieDialog()">Add New Theater?</button>
+
+
+<table class="action-table"> 
+
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Total Screens</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (theater of theaters ; track theater.theater_id) {
+      <tr>
+<td data-label="ID">{{ theater.theater_id }}</td>
+<td data-label="Name">{{ theater.name }}</td>
+
+<td class="Location-col" data-label="Location">
+  {{ theater.location }}
+</td>
+
+<td data-label="total_screens">{{ theater.total_screens}}</td>
+
+
+<td data-label="Delete">
+  <i class="fa fa-trash" (click)="removeTheater(theater.theater_id)"></i>
+</td>
+
+
+      </tr>
+    }
+  </tbody>
+
+</table>

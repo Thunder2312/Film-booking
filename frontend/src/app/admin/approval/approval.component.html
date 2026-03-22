@@ -1,0 +1,38 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+<table class="action-table"> 
+
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Full Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Approval</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (user of users; track user.user_id) {
+      <tr>
+
+       <td data-label="ID">{{ user.user_id }}</td>
+<td data-label="Username">{{ user.username }}</td>
+<td data-label="Full Name">{{ user.full_name }}</td>
+<td data-label="Email">{{ user.email }}</td>
+<td data-label="Phone">{{ user.phone }}</td>
+<td data-label="Approval">
+    <i (click)="approveUser(user.user_id)"><span>&#10003;</span></i>
+</td>
+
+
+
+      </tr>
+    }
+  </tbody>
+
+</table>

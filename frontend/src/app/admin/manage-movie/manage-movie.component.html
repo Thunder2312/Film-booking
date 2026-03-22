@@ -1,0 +1,52 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+<table class="action-table"> 
+
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Duration</th>
+      <th>Genre</th>
+      <th>Language</th>
+      <th>Rated</th>
+      <th>Release Date</th>
+      <th>Image</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (movie of movies(); track movie.movie_id) {
+      <tr>
+<td data-label="ID">{{ movie.movie_id }}</td>
+<td data-label="Title">{{ movie.title }}</td>
+
+<td class="description-col" data-label="Description">
+  {{ movie.description }}
+</td>
+
+<td data-label="Duration">{{ movie.duration_minutes }} mins</td>
+<td data-label="Genre">{{ movie.genre }}</td>
+<td data-label="Language">{{ movie.language }}</td>
+<td data-label="Rated">{{ movie.rated }}</td>
+<td data-label="Release Date">{{ movie.release_date | date }}</td>
+
+<td data-label="Image">
+  <img [src]="movie.image" alt="movie image" />
+</td>
+
+<td data-label="Delete">
+  <i class="fa fa-trash" (click)="removeMovie(movie.movie_id)"></i>
+</td>
+
+
+      </tr>
+    }
+  </tbody>
+
+</table>

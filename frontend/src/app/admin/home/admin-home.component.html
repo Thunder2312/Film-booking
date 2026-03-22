@@ -1,0 +1,19 @@
+<app-header></app-header>
+
+<div class="admin-layout">
+  <nav class="navbar">
+    <ul class="links">
+      <button class="burgir" (click)="toggleMenu()">&#x2630;</button>
+      <li>
+        @for (link of links; track link.label) {
+          <button [routerLink]="[link.path]">{{ link.label }}<br>
+          </button>
+        }
+      </li>
+    </ul>
+  </nav>
+
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

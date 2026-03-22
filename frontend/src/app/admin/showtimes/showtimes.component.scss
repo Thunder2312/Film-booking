@@ -1,0 +1,221 @@
+
+/* ===== Main Table ===== */
+.action-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.action-table thead th {
+  background: linear-gradient(135deg, #b69de6, #9c79e6);
+  color: #fff;
+  padding: 14px 16px;
+  font-weight: 700;
+  text-align: left;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+/* Rows */
+.action-table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #eaeaea;
+  font-size: 14px;
+  vertical-align: middle;
+  transition: background 0.2s;
+}
+
+/* Hover Effect */
+.action-table tbody tr:hover {
+  background: #f3f6ff;
+}
+
+/* Description column */
+.action-table td.description-col {
+  max-width: 280px;
+  line-height: 1.4;
+  color: #555;
+  word-wrap: break-word;
+}
+
+/* Images */
+.action-table img {
+  width: 70px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+/* Font Awesome Icons */
+.action-table i {
+  cursor: pointer;
+  color: #555;
+  transition: 0.2s ease;
+}
+
+.action-table i:hover {
+  color: #673ab7;
+  transform: scale(1.2);
+}
+
+/* Delete Icon Hover */
+.action-table i.fa-trash:hover {
+  color: #e53935;
+}
+
+/* ===== Showtime Nested Table ===== */
+.showtime-container {
+  margin-top: 10px;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.showtime-container h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.showtime-inner-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.showtime-inner-table th,
+.showtime-inner-table td {
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.showtime-inner-table th {
+  background: #e0d4f7;
+  color: #333;
+  font-weight: 600;
+}
+
+.showtime-inner-table tr:hover {
+  background: #ececff;
+}
+
+.showtime-inner-table input[type="time"],
+.showtime-inner-table input[type="number"] {
+  width: 100%;
+  padding: 4px 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.showtime-inner-table input:focus {
+  border-color: #673ab7;
+  box-shadow: 0 0 3px rgba(103, 58, 183, 0.4);
+}
+
+/* Save Button */
+.save-btn {
+  margin-top: 12px;
+  padding: 6px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .action-table thead {
+    display: none;
+  }
+
+  .action-table tr {
+    display: block;
+    margin-bottom: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .action-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 6px;
+    border-bottom: none;
+  }
+
+  .action-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #333;
+    margin-right: 10px;
+  }
+
+  .action-table img {
+    width: 60px;
+    height: 90px;
+  }
+
+  /* Showtime table inside responsive movie row */
+  .showtime-container {
+    padding: 8px;
+  }
+
+  .showtime-inner-table th,
+  .showtime-inner-table td {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+}
+/* Collapsible Accordion */
+.showtime-accordion {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 10px;
+  overflow: hidden;
+  background: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.showtime-header {
+  padding: 10px 15px;
+  background: #e0d4f7;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.showtime-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.showtime-body {
+  padding: 10px 15px;
+  animation: slideDown 0.3s ease;
+}
+
+/* Slide Down Animation */
+@keyframes slideDown {
+  from { opacity: 0; max-height: 0; }
+  to { opacity: 1; max-height: 1000px; }
+}
+
+/* Active Plus Icon */
+.action-table i.active {
+  color: #673ab7;
+  transform: rotate(45deg);
+}
+
