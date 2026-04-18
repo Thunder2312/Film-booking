@@ -14,3 +14,4 @@ export interface SeatTypeConfig{
   totalSeats: number;
   price: number;
 }
+

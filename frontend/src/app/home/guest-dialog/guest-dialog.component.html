@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Guest Details</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Full Name</mat-label>
+    <input matInput [(ngModel)]="guest.full_name" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" [(ngModel)]="guest.email">
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Phone</mat-label>
+    <input matInput [(ngModel)]="guest.phone">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="!guest.full_name" (click)="onConfirm()">Proceed to Pay</button>
+</mat-dialog-actions>

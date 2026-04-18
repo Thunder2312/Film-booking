@@ -9,7 +9,9 @@
         <button 
         (click)="toggleSeat(seat.seatName)"
         class="seat-button regular"
-        [class.selected]="selectedSeats.has(seat.seatName)">
+        [class.selected]="selectedSeats.has(seat.seatName)"
+        [class.booked]="seat.seatStatus === 'BOOKED'"
+        [disabled]="seat.seatStatus === 'BOOKED'">
         {{seat.seatName}}
       </button>
     }
@@ -18,7 +20,14 @@
 <h3>Premium Seats</h3>
 <div class="seat-row">
     @for(seat of premiumSeats; track seat.seatName){
-        <button (click)="!seatSelected" class="seat-button premium">{{seat.seatName}}</button>
+        <button 
+        (click)="toggleSeat(seat.seatName)" 
+        class="seat-button premium"
+        [class.selected]="selectedSeats.has(seat.seatName)"
+        [class.booked]="seat.seatStatus === 'BOOKED'"
+        [disabled]="seat.seatStatus === 'BOOKED'">
+        {{seat.seatName}}
+        </button>
     }
 </div>
 
@@ -26,10 +35,20 @@
 <div class="seat-row">
     @for(seat of vipSeats; track seat.seatName){
         <button 
-  (click)="toggleSeat(seat.seatName)"
-  class="seat-button regular"
-  [class.selected]="selectedSeats.has(seat.seatName)">
-  {{seat.seatName}}
-</button>
-    }
+        (click)="toggleSeat(seat.seatName)"
+        class="seat-button vip"
+        [class.selected]="selectedSeats.has(seat.seatName)"
+        [class.booked]="seat.seatStatus === 'BOOKED'"
+        [disabled]="seat.seatStatus === 'BOOKED'">
+        {{seat.seatName}}
+        </button>
+}
+
+    
+<div class="booking-summary" *ngIf="selectedSeats.size > 0">
+    <p>Selected Seats: {{ Array.from(selectedSeats).join(', ') }}</p>
+    <button mat-raised-button color="primary" (click)="onBookSeats()">
+        Book Now
+    </button>
+</div>
 </div>

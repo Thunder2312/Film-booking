@@ -5,16 +5,16 @@ import { map, tap } from 'rxjs/operators';
 import { MovieData  } from '../admin/movie-dialog/movie-data.model';
 import { ShowTime } from './showTime.model';
 import { C } from '@angular/cdk/keycodes';
+import { API_CONFIG } from '../constants/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 
-
 export class ShowTimeService{
   constructor(private http: HttpClient){}
 
-    private baseUrl = 'http://localhost:3000/showtimes';
+    private baseUrl = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.SHOWTIMES}`;
 
     addShowTime(showtime: ShowTime){
       const payload = {
