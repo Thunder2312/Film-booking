@@ -1,13 +1,23 @@
-# Ignore frontend environment file
-/frontend/environment/environment.ts
-/frontend/environment/
-/frontend/.vscode
-/frontend/.angular
-
-
-# Ignore backend environment file
+# ─── Backend ─────────────────────────────────────────────
+# Real secret files — never commit these
 /backend/.env
-/backend/table.sql
+/backend/.env.development
+/backend/.env.production
 
-# Ignore all node_modules folders
+# Keep .env.example in git (it has no real secrets)
+
+# Build output
+/backend/dist/
+
+# ─── Frontend ────────────────────────────────────────────
+# Angular cache and build output
+/frontend/.angular/
+/frontend/dist/
+/frontend/.vscode/
+
+# ─── Shared ──────────────────────────────────────────────
+# SQL schema (optional, uncomment if you want it ignored)
+# /backend/table.sql
+
+# Ignore all node_modules
 node_modules/

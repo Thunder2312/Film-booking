@@ -17,7 +17,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   templateUrl: './theaters.component.html',
   styleUrl: './theaters.component.scss'
 })
-export class TheatresComponent {
+export class TheatresComponent implements OnInit{
 constructor(
   private theaterStore: theaterService ,
   private snackBar: MatSnackBar, private dialog: MatDialog

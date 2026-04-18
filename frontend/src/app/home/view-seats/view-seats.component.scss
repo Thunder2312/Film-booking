@@ -14,7 +14,7 @@
     margin: 6px;
 }
 
-.seat-button:hover {
+.seat-button:not(:disabled):hover {
     background: #d1fae5;
     color: #065f46;
 }

@@ -1,11 +1,11 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MovieData } from '../admin/movie-dialog/movie-data.model';
+import { API_CONFIG } from '../constants/constants';
 @Injectable({ providedIn: 'root' })
 export class MovieStoreService {
 
-  private baseUrl = 'http://localhost:3000/movies';
-
+  private baseUrl = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.MOVIES}`;
   movies = signal<MovieData[]>([]);
   selectedMovie = signal<MovieData | null>(null);
   error = signal<string | null>(null);

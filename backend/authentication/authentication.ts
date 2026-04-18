@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-const express = require('express');
-const router = express.Router();
+const config = require('../config');
 
 function authenticateToken(req:any,res:any,next:any){
     const authHeader = req.headers['authorization'];
@@ -8,7 +7,7 @@ function authenticateToken(req:any,res:any,next:any){
 
     if(!token) return res.sendStatus(401);
 
-    jwt.verify(token, process.env.SECRET_TOKEN, (err:any,user:any)=>{
+    jwt.verify(token, config.auth.secretToken, (err:any, user:any) => {
         if(err) return res.sendStatus(403);
         req.user = user;
         next();

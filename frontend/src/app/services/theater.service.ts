@@ -4,39 +4,42 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { theaterData } from './theater.model';
 import { ShowTime } from './showTime.model';
+import { API_CONFIG } from '../constants/constants';
 @Injectable({
   providedIn: 'root'
 })
 export class theaterService {
 
-  private baseUrl = 'http://localhost:3000/theaters';
-
+  private baseUrl = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.THEATERS}`;
   // BehaviorSubject holds the current theater list
   private theaterSubject = new BehaviorSubject<theaterData[]>([]);
   theaters$ = this.theaterSubject.asObservable(); // components subscribe here
 
   constructor(private http: HttpClient) {}
 
-  // Load theaters from server and update the subject
-  loadTheaters() {
+  loadTheaters(): void {
     this.http.get<{ result: any[] }>(`${this.baseUrl}/getTheater`)
       .pipe(
         tap(res => {
-          console.log('API response:', res);  
-          const theaters = res.result.map(theater => ({
-            theater_id: theater.theater_id,
-            name: theater.name,
-            location: theater.location,
-            total_screens: theater.total_screens,
-            city: theater.city,
-            showtimeStart: 0,
-            showtimeEnd: 0,
-            showtimePrice: 0
-          }));
-         this.theaterSubject.next(theaters); // ✅ update subject 
+          // Ensure 'result' exists before mapping to prevent crashes
+          if (res && res.result) {
+            const theaters = res.result.map(theater => ({
+              theater_id: theater.theater_id,
+              name: theater.name,
+              location: theater.location,
+              total_screens: theater.total_screens,
+              city: theater.city,
+              showtimeStart: 0,
+              showtimeEnd: 0,
+              showtimePrice: 0
+            }));
+            this.theaterSubject.next(theaters);
+          }
         })
       )
-      .subscribe();
+      .subscribe({
+        error: (err) => console.error('Failed to load theaters from API', err)
+      });
   }
 
   addTheater(data: any) {
@@ -58,16 +61,4 @@ removeTheater(theater_id: number) {
     })
   );
 }
-
-
-  
-  // Add a showtime for a theater
-  addShowtime(showtime: ShowTime): Observable<any> {
-    return this.http.post('/api/showtimes', showtime);
-  }
-
-  // Add multiple showtimes at once
-  addMultipleShowtimes(showtimes: ShowTime[]): Observable<any> {
-    return this.http.post('/api/showtimes/bulk', showtimes);
-  }
 }

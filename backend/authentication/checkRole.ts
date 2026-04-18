@@ -1,8 +1,4 @@
-const jwt = require('jsonwebtoken');
-const express = require('express');
-const router = express.Router();
-const { pool } = require('../src/db');
-require('dotenv').config();
+const { pool } = require('../config/db');
 
 async function checkRole(req: any, res: any, next: any) {
     try {

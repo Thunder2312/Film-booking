@@ -1,26 +1,31 @@
-require('dotenv').config({ path: require('path').resolve(__dirname, './.env') });
+// Load environment config first — must be before any other import
+const config = require('./config');
+
 const express = require('express');
-const userRoutes = require('./routes/app');
 const cors = require('cors');
 const app = express();
-const seatRoutes = require('./routes/seats');
-const movieRoutes = require('./routes/movies')
-const theaterRoutes = require('./routes/theater')
-const showtimeRoutes = require('./routes/showtimes')
-const screenRoutes = require('./routes/screens');
-const { pool } = require('./src/db');
+const { pool } = require('./config/db');
+const { swaggerUi, swaggerSpec } = require('./config/swagger');
+
+// Route imports
+const userRoutes = require('./routes/user.routes');
+const movieRoutes = require('./routes/movie.routes');
+const theaterRoutes = require('./routes/theater.routes');
+const showtimeRoutes = require('./routes/showtime.routes');
+const screenRoutes = require('./routes/screen.routes');
+const seatRoutes = require('./routes/seat.routes');
+const paymentRoutes = require('./routes/payment.routes');
 
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-  process.exit(1); // Force a non-zero exit code so nodemon shows the error
+  process.exit(1);
 });
-// Option 1: Allow a specific origin
-app.use(cors({
-  origin: 'http://localhost:4200', // Angular app URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
 
+app.use(cors({
+  origin: config.server.corsOrigin,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 pool.query('SELECT NOW()', (err: any, res: any) => {
   if (err) {
@@ -32,7 +37,11 @@ pool.query('SELECT NOW()', (err: any, res: any) => {
 });
 
 app.use(express.json());
-const PORT = process.env.PORT || 3000;
+
+// Swagger API docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+const PORT = config.server.port;
 
 // Mount routes
 app.use('/user', userRoutes);
@@ -41,7 +50,10 @@ app.use('/theaters', theaterRoutes);
 app.use('/showtimes', showtimeRoutes);
 app.use('/screens', screenRoutes);
 app.use('/seats', seatRoutes);
+app.use('/payment', paymentRoutes);
+
 // Start the server
 app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
+  console.log(`[${config.env}] Server running on http://localhost:${PORT}`);
+  console.log(`[${config.env}] API docs available at http://localhost:${PORT}/api-docs`);
 });

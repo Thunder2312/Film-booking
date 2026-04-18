@@ -23,12 +23,14 @@
 
         <div class="date-selector">
             <button
-            c
-            *ngFor="let date of nextSixDays"
+                *ngFor="let date of nextSixDays"
+                (click)="selectDate(date)"
+                [class.selected]="isSameDate(date, selectedDate())"
+                class="active"
             >
-            <div>{{date | date: 'EEE'}}</div>
-            <div class="day">{{date | date: 'd'}}</div>
-            <div class="month">{{date | date: 'MMM' | uppercase}}</div>
+                <div>{{date | date: 'EEE'}}</div>
+                <div class="day">{{date | date: 'd'}}</div>
+                <div class="month">{{date | date: 'MMM' | uppercase}}</div>
             </button>
         </div>
     </div>
