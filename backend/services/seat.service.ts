@@ -9,7 +9,14 @@ async function getSeatsByShowtimeId(showtimeId: number) {
         se.seat_type,
         sp.price,
         CASE
-            WHEN b.booking_id IS NOT NULL THEN 'BOOKED'
+            WHEN EXISTS (
+                SELECT 1
+                FROM booked_seats bs
+                JOIN bookings b ON bs.booking_id = b.booking_id
+                WHERE bs.seat_id = se.seat_id
+                  AND b.showtime_id = st.showtime_id
+                  AND b.payment_status = 'CONFIRMED'
+            ) THEN 'BOOKED'
             ELSE 'AVAILABLE'
         END AS status
     FROM showtimes st
@@ -18,12 +25,6 @@ async function getSeatsByShowtimeId(showtimeId: number) {
     JOIN showtime_prices sp 
         ON sp.showtime_id = st.showtime_id 
         AND sp.seat_type = se.seat_type
-    LEFT JOIN booked_seats bs 
-        ON bs.seat_id = se.seat_id
-    LEFT JOIN bookings b 
-        ON b.booking_id = bs.booking_id 
-        AND b.showtime_id = st.showtime_id
-        AND b.payment_status = 'CONFIRMED'
     WHERE st.showtime_id = $1
     ORDER BY se.seat_number;
   `, [showtimeId]);
