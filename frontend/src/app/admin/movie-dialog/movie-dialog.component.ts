@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-add-movie',
@@ -11,6 +12,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class MovieDialogComponent {
+
+  baseUrl = environment.apiUrl;
 
   movieForm: FormGroup;
   showForm: boolean = true;
@@ -25,7 +28,7 @@ export class MovieDialogComponent {
     // Initialize Reactive Form
     this.movieForm = this.fb.group({
       title: ['', Validators.required],
-      year:  ['', Validators.required],
+      year: ['', Validators.required],
       description: ['', Validators.required],
       duration_minutes: [0, Validators.required],
       genre: ['', Validators.required],
@@ -75,7 +78,7 @@ export class MovieDialogComponent {
       return;
     }
 
-    this.http.post('http://localhost:3000/movies/addMovie', this.movieForm.value)
+    this.http.post(`${this.baseUrl}/movies/addMovie`, this.movieForm.value)
       .subscribe({
         next: (res: any) => {
           console.log('Movie Added Successfully:', res.message || res);
