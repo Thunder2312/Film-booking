@@ -15,6 +15,8 @@ const showtimeRoutes = require('./routes/showtime.routes');
 const screenRoutes = require('./routes/screen.routes');
 const seatRoutes = require('./routes/seat.routes');
 const paymentRoutes = require('./routes/payment.routes');
+const emailRoutes = require("./routes/email.routes");
+
 
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
@@ -40,6 +42,8 @@ app.use(express.json());
 
 // Swagger API docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/email", emailRoutes);
+
 
 const PORT = config.server.port;
 

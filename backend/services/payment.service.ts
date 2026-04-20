@@ -2,6 +2,8 @@ const { pool } = require('../config/db');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const config = require('../config');
+const { generateQRCode } = require("../utils/qrcode");
+const { sendEmail } = require("../services/email.service");
 
 const razorpay = new Razorpay({
   key_id: config.razorpay.keyId,
@@ -82,35 +84,94 @@ async function createOrder(data: {
     client.release();
   }
 }
-
-async function verifyPayment(data: {
-  razorpay_order_id: string;
-  razorpay_payment_id: string;
-  razorpay_signature: string;
-  booking_id: number;
-}) {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature, booking_id } = data;
+async function verifyPayment(data: { razorpay_order_id: any; razorpay_payment_id: any; razorpay_signature: any; booking_id: any; }) {
+  const {
+    razorpay_order_id,
+    razorpay_payment_id,
+    razorpay_signature,
+    booking_id,
+  } = data;
 
   const sign = razorpay_order_id + "|" + razorpay_payment_id;
+
   const expectedSign = crypto
     .createHmac("sha256", config.razorpay.keySecret)
-    .update(sign.toString())
+    .update(sign)
     .digest("hex");
 
   if (razorpay_signature !== expectedSign) {
     return { valid: false };
   }
 
-  // Update the database
-  await pool.query(
-    `UPDATE bookings SET payment_status = 'CONFIRMED' WHERE booking_id = $1`,
+  // Get show + screen + movie
+  const infoRes = await pool.query(
+    `
+    SELECT 
+      b.booking_id,
+      sc.name AS screen_name,
+      s.start_time,
+      m.title AS movie_title
+    FROM bookings b
+    JOIN showtimes s ON s.showtime_id = b.showtime_id
+    JOIN screens sc ON sc.screen_id = s.screen_id
+    JOIN movies m ON m.movie_id = s.movie_id
+    WHERE b.booking_id = $1
+    `,
     [booking_id]
   );
 
-  return { valid: true };
+  // Get seats
+  const seatsRes = await pool.query(
+    `
+    SELECT se.seat_number
+    FROM booked_seats bs
+    JOIN seats se ON se.seat_id = bs.seat_id
+    WHERE bs.booking_id = $1
+    `,
+    [booking_id]
+  );
+
+  const info = infoRes.rows[0];
+  const seats = seatsRes.rows.map((s: { seat_number: any; }) => s.seat_number);
+
+  // update booking
+  await pool.query(
+    `UPDATE bookings SET payment_status = 'SUCCESS' WHERE booking_id = $1`,
+    [booking_id]
+  );
+
+  // build QR payload
+  const qrPayload = {
+    booking_id: info.booking_id,
+    movie_title: info.movie_title,
+    screen_name: info.screen_name,
+    show_date: info.start_time.toISOString().split("T")[0],
+    show_time: info.start_time.toTimeString().split(" ")[0],
+    seats: seats,
+  };
+
+  const qrCode = await generateQRCode(qrPayload);
+
+  // 🎯 Send email
+  await sendEmail({
+    to: info.email, // make sure you fetched this
+    templateId: "TICKET_CONFIRMATION",
+    variables: {
+      movie: info.movie_title,
+      screen: info.screen_name,
+      date: qrPayload.show_date,
+      time: qrPayload.show_time,
+      seats: seats.join(", "),
+      bookingId: info.booking_id,
+      qrCode: qrCode, // 👈 important
+    },
+  });
+
+  return {
+    valid: true,
+    qrCode,
+    ticket: qrPayload,
+  };
 }
 
-module.exports = {
-  createOrder,
-  verifyPayment,
-};
+module.exports = { createOrder, verifyPayment };
