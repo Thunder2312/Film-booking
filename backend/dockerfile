@@ -1,0 +1,21 @@
+# Use the official Node.js Alpine image for a lightweight container
+FROM node:18-alpine
+
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+
+# 1. Copy package.json first to cache dependencies
+COPY package*.json ./
+RUN npm install
+
+# 2. Copy the rest of your files (index.ts, controllers, routes, etc.)
+COPY . .
+
+# 3. Compile the TypeScript code to JavaScript (creates the /dist folder)
+RUN npm run build
+
+# 4. Expose the port Express runs on
+EXPOSE 3000
+
+# 5. Start the application
+CMD ["npm", "start"]
