@@ -23,10 +23,11 @@ process.on('unhandledRejection', (reason, promise) => {
   process.exit(1);
 });
 
+// Add this BEFORE your routes!
 app.use(cors({
-  origin: config.server.corsOrigin,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 pool.query('SELECT NOW()', (err: any, res: any) => {

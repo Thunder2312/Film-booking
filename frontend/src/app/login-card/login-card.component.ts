@@ -5,6 +5,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from '../header/header.component';
 import { PasswordToggleDirective } from '../directives/password-toggle.directive';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login-card',
@@ -21,8 +22,10 @@ import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 })
 export class LoginCardComponent {
 
-username = new FormControl<string>('', { nonNullable: true });
-password = new FormControl<string>('', { nonNullable: true });
+  username = new FormControl<string>('', { nonNullable: true });
+  password = new FormControl<string>('', { nonNullable: true });
+
+  baseUrl = environment.apiUrl;
 
 
   loginError: string | null = null;
@@ -30,14 +33,14 @@ password = new FormControl<string>('', { nonNullable: true });
   constructor(
     private router: Router,
     private http: HttpClient
-  ) {}
+  ) { }
 
   gotoSignup() {
     this.router.navigate(['']);
   }
 
   onSubmit(event: Event) {
-      event.preventDefault(); // Page reload ke liye hai bhai
+    event.preventDefault(); // Page reload ke liye hai bhai
     if (this.username.invalid || this.password.invalid) {
       this.loginError = 'Please enter username and password.';
       return;
@@ -50,7 +53,7 @@ password = new FormControl<string>('', { nonNullable: true });
 
     this.loginError = null;
 
-    this.http.post<any>('http://localhost:3000/user/login', loginData).subscribe({
+    this.http.post<any>(`${this.baseUrl}/user/login`, loginData).subscribe({
       next: (res) => {
         const token = res.token;
         if (token) {
